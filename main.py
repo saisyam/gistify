@@ -11,12 +11,29 @@ CORS(app)
 def index():
     return "<h1>Landing page coming soon...</h1>"
 
+# provide github URL to get complete code
+# to give linenumbers add /l/<lineno> - 1,2 or 1,3-5,8 etc
 @app.route('/<path:url>')
 def gistify(url):
-    filename = url.split("/")[-1]
-    rawurl = url.replace("blob", "raw")
-    document = parsegit(url)
-    return render_template('gistify.html', document=Markup(document), filename=filename, rawurl=rawurl, url=url)
+    try:
+        urlitems = url.split("/")
+        filename = None
+        lineno = None
+        giturl = None
+        
+        if urlitems[-2] == "l":
+            lineno = urlitems[-1]
+            filename = urlitems[-3]
+            giturl = url[:url.index("/l/")]
+        else:
+            filename = urlitems[-1]
+            lineno = None
+            giturl = url
+        rawurl = giturl.replace("blob", "raw")
+        document = parsegit(giturl, lineno)
+        return render_template('gistify.html', document=Markup(document), filename=filename, rawurl=rawurl, url=giturl)
+    except:
+        return render_template('error.html', url=url)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
