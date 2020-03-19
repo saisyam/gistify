@@ -9,7 +9,7 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return "<h1>Landing page coming soon...</h1>"
+    return render_template('index.html')
 
 # provide github URL to get complete code
 # to give linenumbers add /l/<lineno> - 1,2 or 1,3-5,8 etc
