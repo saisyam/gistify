@@ -47,3 +47,9 @@ def linestodisplay(linestring, maxlines):
     while vlines[-1] > int(maxlines):
         vlines.remove(vlines[-1])
     return vlines
+
+def github_contribution(url):
+    response = requests.get(url, headers=HEADER)
+    soup = BeautifulSoup(response.text, "lxml")
+    div = soup.find("div", {"class": "js-yearly-contributions"})
+    return str(div)

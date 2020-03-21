@@ -35,5 +35,11 @@ def gistify(url):
     except:
         return render_template('error.html', url=url)
 
+@app.route('/contribution/<username>')
+def contribution(username):
+    url = "https://github.com/"+username
+    document = github_contribution(url)
+    return render_template('contribution.html', document=Markup(document))
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080, debug=True)
