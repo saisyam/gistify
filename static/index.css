@@ -1804,3 +1804,6 @@ pre .support.value  {
     font-weight: normal;
     color: #3b8bba; /* skinbuilder block-mine-text-low with #1f8dd6 as primary */
 }
+
+.gist .file{border-color: transparent !important;}
+.gist .Box-body{border-bottom: 0px;}
