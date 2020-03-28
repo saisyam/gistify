@@ -52,4 +52,12 @@ def github_contribution(url):
     response = requests.get(url, headers=HEADER)
     soup = BeautifulSoup(response.text, "lxml")
     div = soup.find("div", {"class": "js-yearly-contributions"})
+    details = soup.find("details")
+    if details is not None:
+        details.decompose()
+    footer = soup.find("div", {"class": "contrib-footer"})
+    if footer is not None:
+        tdiv = footer.find_all("div")
+        if tdiv is not None:
+            tdiv[0].decompose()
     return str(div)
